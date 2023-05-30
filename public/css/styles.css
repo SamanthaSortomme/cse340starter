@@ -1,6 +1,13 @@
 /******* Change Box Model ***************/
-*,
+/* *,
 *:before,
 *:after {
   box-sizing: border-box;
+} */
+
+body {
+  max-width: 100%;
+  color: blue;
+  text-align: center;
+  background-color: blueviolet;
 }
