@@ -4,10 +4,72 @@
 *:after {
   box-sizing: border-box;
 } */
+:root {
+  --p-color: #1a94a2;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  background-color: black;
+  color: white;
+  padding: .2em;
+  margin: 0;
+}
+
+nav li {
+  display: inline;
+  list-style-type: none;
+  padding: 10px;
+  font-size: 4vw;
+}
+
+nav a {
+  text-decoration: none;
+}
 
 body {
   max-width: 100%;
-  color: blue;
-  text-align: center;
-  background-color: blueviolet;
+}
+
+.delorean {
+  display: inline-block;
+  position: relative;
+}
+
+#delorean-image {
+  width: 400px;
+  height: auto;
+}
+
+.delorean-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--p-color);
+}
+
+.delorean-content ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.delorean-content li {
+  margin-bottom: 5px;
+}
+
+#button {
+  background-color: var(--p-color);
+  color: black;
+  border: none;
+  font-size: 15px;
+  padding: 10px;
 }
