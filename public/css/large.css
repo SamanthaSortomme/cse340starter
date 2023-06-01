@@ -3,13 +3,18 @@
         background-image: url('../images/site/small_check.jpg');
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: center;
     }
 
     .content-box {
-        max-width: 1200px;
+        max-width: 650px;
         margin: 0 auto;
         border: 2px solid var(--p-color);
         padding: 20px;
+    }
+
+    .content-box {
+        background-color: white;
     }
 
     .content-box>header {
@@ -39,7 +44,10 @@
         grid-row: 2 / 2;
     }
 
+    /* #dmc-review {
+        grid-row: 1 / 2;
 
+    } */
 
     h3 {
 
@@ -48,7 +56,5 @@
         grid-row: 1 / 2;
     }
 
-    .content-box {
-        background-color: white;
-    }
+
 }
