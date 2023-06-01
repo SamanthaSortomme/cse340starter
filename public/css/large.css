@@ -1,5 +1,54 @@
 @media only screen and (min-width: 600px) {
     body {
         background-image: url('../images/site/small_check.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .content-box {
+        max-width: 1200px;
+        margin: 0 auto;
+        border: 2px solid var(--p-color);
+        padding: 20px;
+    }
+
+    .content-box>header {
+        background-color: black;
+        /* Update the background color for the header element */
+    }
+
+    .delorean {
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        margin-top: 20px;
+    }
+
+    #upgrades {
+        grid-column: 1 / 2;
+        grid-row: 2 / 2;
+    }
+
+    .reviews {
+        grid-column: 2 / 3;
+        grid-row: 2 / 2;
+    }
+
+
+
+    h3 {
+
+        text-align: center;
+        margin-top: 20px;
+        grid-row: 1 / 2;
+    }
+
+    .content-box {
+        background-color: white;
     }
 }
