@@ -2,7 +2,7 @@ const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
-module.exports = invCont
+
 
 /* ***************************
  *  Build inventory by classification view
@@ -19,4 +19,4 @@ invCont.buildByClassificationId = async function (req, res, next) {
     grid,
   })
 }
-
+module.exports = invCont
