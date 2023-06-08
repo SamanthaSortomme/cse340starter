@@ -24,7 +24,7 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-module.exports = Util
+
 
 
 /* **************************************
@@ -59,3 +59,15 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for
+ * General Error Handling
+ * https://blainerobertson.github.io/340-js/views/error-handling.html
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+module.exports = Util
