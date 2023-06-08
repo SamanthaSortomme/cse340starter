@@ -14,9 +14,11 @@ app.use(require("./routes/static"))
 app.get("/", baseController.buildHome)
 // app.get("/", function (req, res) { res.render("index", {title: "Home"})
 // })
+// Inventory routes
+app.use("/inv", require("./routes/inventoryRoute"))
 
 app.get('/', (req, res) => {
-  const year = new Date().getFullYear();
+  // const year = new Date().getFullYear();
   res.render('index', { title: 'Home', year });
 });
 
