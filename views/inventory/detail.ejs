@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+    <main>
+        <h1>
+            <%= title %>
+        </h1>
+        <div class="vehicle-detail">
+            <img src="<%= vehicle.image %>" alt="Image of <%= vehicle.make %> <%= vehicle.model %>" />
+            <div class="vehicle-info">
+                <p><strong>Make:</strong>
+                    <%= vehicle.make %>
+                </p>
+                <p><strong>Model:</strong>
+                    <%= vehicle.model %>
+                </p>
+                <p><strong>Year:</strong>
+                    <%= vehicle.year %>
+                </p>
+                <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %>
+                </p>
+                <p><strong>Mileage:</strong>
+                    <%= vehicle.mileage.toLocaleString() %>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>

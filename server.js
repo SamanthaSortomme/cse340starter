@@ -29,7 +29,7 @@ app.use(async (err, req, res, next) => {
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   const message =
     err.status == 404
-      ? err.message
+      ? (err.message || "i")
       : "Oh no! There was a crash. Maybe try a different route?";
   res.render("errors/error", {
     title: err.status || "Server Error",
