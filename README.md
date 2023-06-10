@@ -26,7 +26,7 @@ With the packages installed you're ready to run the initial test.
 1. If the VSC terminal is still open use it. If it is closed, open it again using the same command as before.
 2. Type the following command, then press Enter:
 
-    pnpm run dev
+    
 
 3. If the command works, you should see the message "app listening on localhost:5500" in the console.
 4. Open the package.json file.
