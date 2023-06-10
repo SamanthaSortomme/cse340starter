@@ -6,13 +6,12 @@ const baseController = require("./controllers/baseController")
 const app = express()
 const utilities = require('./utilities');
 
-
+app.get('/favicon.ico', (req, res) => res.status(204));
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 app.use(require("./routes/static"))
-// Index route
-// Index route
+
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // app.get("/", baseController.buildHome)
