@@ -39,14 +39,13 @@ validate.registrationRules = () => {
         .withMessage("Password does not meet requirements."),
     ]
   }
-
   /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
-    console.log(req.body)
-    debugger
-    // const { account_firstname, account_lastname, account_email } = req.body
+    // console.log(req.body)
+    // debugger
+    const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
     // const errors = validationResult(req);
     errors = validationResult(req)
