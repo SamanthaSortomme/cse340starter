@@ -68,12 +68,13 @@ Util.buildCar = async function(vehicle){
     + 'details"><img src="' + vehicle.inv_thumbnail
     +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
     +' on CSE Motors" /></a>'
+    grid += '<p>' + vehicle.inv_description + '</p>'
     grid += '<div class="namePrice">'
     grid += '<hr />'
     grid += '<h2>'
-    grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
-    + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-    + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+    grid += '<p>' + 'Year: ' + vehicle.inv_year + '</p>'
+    grid += '<p>' +'Color: ' + vehicle.inv_color + '</p>'
+    grid += '<p>' +'miles: ' + vehicle.inv_miles + '</p>'
     grid += '</h2>'
     grid += '<span>$'
     + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
