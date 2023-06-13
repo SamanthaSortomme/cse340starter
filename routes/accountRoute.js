@@ -7,6 +7,7 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin));
 router.get('/register', accountController.buildRegistration);
 
 
+
 router.get('/', accountController.getAccount);
 
 module.exports = router;

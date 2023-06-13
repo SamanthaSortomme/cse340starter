@@ -7,6 +7,7 @@ async function buildLogin(req, res, next) {
     title: 'Login',
     nav,
     flash: req.flash(),
+    errors: null,
   });
 }
 async function buildRegistration(req, res, next) {
