@@ -20,17 +20,15 @@ async function buildRegister(req, res, next) {
     errors: null,
   })
 }
-
-
 // Handle registration form submission
 async function register(req, res, next) {
   // Process the registration data and perform necessary actions
   // Example: Save user data to the database
 
-  // Redirect the user to a success page or login page
+  // Redirect the user to a success page or login page 
+
   res.redirect('/account/login');
 }
-
 module.exports = {
   buildLogin,
   buildRegister,
