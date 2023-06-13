@@ -10,9 +10,11 @@ const session = require("express-session")
 const pool = require('./database/')
 // const accountRoute = require('./routes/accountRoute');
 const flash = require('connect-flash');
+const bodyParser = require("body-parser")
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash());
-
-
 app.use(errorRoute);
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
@@ -31,7 +33,6 @@ app.use(function(req, res, next){
   next()
 })
 app.use('/account', require('./routes/accountRoute'));
-
 app.get('/favicon.ico', (req, res) => res.status(204));
 app.set("view engine", "ejs")
 app.use(expressLayouts)
