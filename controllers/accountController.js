@@ -10,16 +10,31 @@ async function buildLogin(req, res, next) {
     errors: null,
   });
 }
-async function buildRegistration(req, res, next) {
-  let nav = await utilities.getNav();
-  res.render('account/register', {
-    title: 'Registration',
+
+// Deliver registration view
+async function buildRegister(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/register", {
+    title: "Register",
     nav,
-  });
+    errors: null,
+  })
 }
+
+
+// Handle registration form submission
+async function register(req, res, next) {
+  // Process the registration data and perform necessary actions
+  // Example: Save user data to the database
+
+  // Redirect the user to a success page or login page
+  res.redirect('/account/login');
+}
+
 module.exports = {
   buildLogin,
-  buildRegistration,
+  buildRegister,
+  register,
   getAccount: (req, res, next) => {
     res.render('account/login', { title: 'Login', flash: req.flash() });
   },

@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> | CSE 340 App</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-
 <h1><%= title %></h1>
 
 <% if (messages() && messages().success) { %>
@@ -20,19 +9,26 @@
     <%= messages().error %>
   </div>
 <% } %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
 
 <form action="/account/register" method="POST">
     <div>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" required>
+      <label for="account_firstname">First Name:</label>
+      <input type="text" id="firstName" name="account_firstname" required>
     </div>
     <div>
       <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" required>
+      <input type="text" id="lastName" name="account_lastname" required>
     </div>
     <div>
       <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" name="account_email" required>
     </div>
     <div>
       <label for="password">Password:</label>
