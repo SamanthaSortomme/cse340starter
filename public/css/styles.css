@@ -139,6 +139,7 @@ label {
   font-weight: bold;
 }
 
+input[type="text"],
 input[type="email"],
 input[type="password"] {
   width: 100%;
@@ -146,6 +147,7 @@ input[type="password"] {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 
 button[type="submit"] {
   background-color: var(--p-color);
