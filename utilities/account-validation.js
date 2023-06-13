@@ -1,6 +1,7 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}
+const logValidate = {};
 const accountModel = require("../models/account-model")
 
 
@@ -9,19 +10,14 @@ const accountModel = require("../models/account-model")
  * ********************************* */
 validate.registrationRules = () => {
     return [
-      // firstname is required and must be string
       body("account_firstname")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("Please provide a first name."), // on error this message is sent.
-
-      // lastname is required and must be string
+        .withMessage("Please provide a first name."),
       body("account_lastname")
         .trim()
         .isLength({ min: 2 })
-        .withMessage("Please provide a last name."), // on error this message is sent.
-
-      // valid email is required and cannot already exist in the DB
+        .withMessage("Please provide a last name."),
       body("account_email")
       .trim()
       .isEmail()
@@ -72,4 +68,39 @@ validate.checkRegData = async (req, res, next) => {
     next()
   }
 
-  module.exports = validate
+//++++++++++++++++++++++++++++++++Log in
+
+
+logValidate.loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required."),
+    body("account_password").trim().notEmpty().withMessage("Password is required."),
+  ];
+};
+
+logValidate.checkLoginData = async (req, res, next) => {
+  const { account_email } = req.body;
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email,
+    });
+    return;
+  }
+  next();
+};
+
+module.exports = {
+  logValidate,
+  validate,
+};
+
+
