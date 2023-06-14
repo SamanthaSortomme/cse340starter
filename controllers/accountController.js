@@ -15,9 +15,7 @@ async function buildLogin(req, res, next) {
   });
 }
 
-/* ****************************************
-*  Process Registration
-* *************************************** */
+
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
@@ -27,7 +25,9 @@ async function registerAccount(req, res) {
   try {
     // regular password and cost (salt is generated automatically)
     hashedPassword = await bcrypt.hashSync(account_password, 10)
+    console.log("Hashed Password:", hashedPassword)
   } catch (error) {
+    console.log("Hashing Error:", error)
     req.flash("notice", 'Sorry, there was an error processing the registration.')
     res.status(500).render("account/register", {
       title: "Registration",
