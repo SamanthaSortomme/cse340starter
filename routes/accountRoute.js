@@ -11,28 +11,25 @@ router.use(express.urlencoded({ extended: true }));
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
 router.get('/register', accountController.buildRegister);
 router.get('/', accountController.getAccount);
-// router.post('/register', (req) => {
-//     console.log(req.body)
 
-// })
 router.post(
     "/register",
     regValidate.validate.registrationRules(),
     regValidate.validate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
   );
-// Process the login attempt
+
 // router.post(
 //     "/login",
-//     (req, res) => {
-//       res.status(200).send('login process')
-//     }
-//   )
-router.post(
-    "/login",
-    regValidate.logValidate.loginRules(),
-    regValidate.logValidate.checkLoginData,
-    utilities.handleErrors(accountController.processLogin)
-  );
+//     regValidate.logValidate.loginRules(),
+//     regValidate.logValidate.checkLoginData,
+//     utilities.handleErrors(accountController.processLogin)
+//   );
+router.post("/login", (req, res) => {
+  res.status(200).send("Login route");
+});
+
+
+  //process login not a function at this time========================================
 module.exports = router;
 

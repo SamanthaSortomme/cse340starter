@@ -40,10 +40,7 @@ app.set("layout", "./layouts/layout")
 app.use(require("./routes/static"))
 app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", require("./routes/inventoryRoute"))
-app.get('/', (req, res) => {
-  // const year = new Date().getFullYear();
-  res.render('index', { title: 'Home', year });
-});
+
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
