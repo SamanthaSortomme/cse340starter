@@ -1,8 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
-
 const invCont = {}
-
 
 /* ***************************
  *  Build inventory by classification view
@@ -20,7 +18,6 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
-
 invCont.buildByCarId = async function (req, res, next) {
   const carId = req.params.carId
   const data = await invModel.getInventoryByCarId(carId)
@@ -35,6 +32,30 @@ invCont.buildByCarId = async function (req, res, next) {
   //   grid,
   })
 }
+
+// https://blainerobertson.github.io/340-js/assignments/assign4.html
+
+invCont.viewInv = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render('inventory/management', {
+    title: 'Login',
+    nav,
+    flash: req.flash(),
+    errors: null,
+  });
+}
+
+
+// invCont.buildManagement = async function (req, res, next) {
+//   let nav = await utilities.getNav()
+//   const className = data[0].classification_name
+//   res.render("./inventory/classification", {
+//     title: className + " vehicles",
+//     nav,
+//     grid,
+//   })
+// }
+
 
 
 module.exports = invCont
