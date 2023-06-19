@@ -1,4 +1,8 @@
-<h1><%= title %></h1>
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
 
 <%# messages() %>
 
@@ -8,6 +12,5 @@
         <label for="classificationName">Classification Name:</label>
         <input type="text" id="classificationName" name="classification_name" required>
     </div>
-    <div id="errorContainer" style="color: red;"></div>
     <button type="submit">Add Classification</button>
 </form>
