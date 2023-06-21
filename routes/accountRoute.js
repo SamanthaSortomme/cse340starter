@@ -19,15 +19,15 @@ router.post(
     utilities.handleErrors(accountController.registerAccount)
   );
 
-// router.post(
-//     "/login",
-//     regValidate.logValidate.loginRules(),
-//     regValidate.logValidate.checkLoginData,
-//     utilities.handleErrors(accountController.processLogin)
-//   );
-router.post("/login", (req, res) => {
-  res.status(200).send("Login route");
-});
+router.post(
+    "/login",
+    regValidate.logValidate.loginRules(),
+    regValidate.logValidate.checkLoginData,
+    utilities.handleErrors(accountController.processLogin)
+  );
+// router.post("/login", (req, res) => {
+//   res.status(200).send("Login route");
+// });
 
 
   //process login not a function at this time========================================
