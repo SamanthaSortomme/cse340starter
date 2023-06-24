@@ -59,6 +59,7 @@ validate.checkRegData = async (req, res, next) => {
         errors,
         title: "Registration",
         nav,
+        flash: req.flash(),
         account_firstname,
         account_lastname,
         account_email,

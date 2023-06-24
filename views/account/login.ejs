@@ -10,15 +10,24 @@
   </div>
 <% } %>
 <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <%  }) %>
+  </ul>
+<% } %>
+
+
+<% if (flash) { %>
+  <% if (flash.notice) { %>
     <ul class="notice">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
+      <% flash.notice.forEach(msg => { %>
+        <li><%= msg %></li>
+      <%  }) %>
+    </ul>
   <% } %>
+<% } %>
 
-
-<%- messages() %>
 
 
 <form action="/account/login" method="POST">

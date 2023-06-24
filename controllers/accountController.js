@@ -78,7 +78,6 @@ async function registerAccount(req, res) {
       hashedPassword
     )
     if (regResult) {
-
       req.flash(
         "notice",
         `Congratulations, you\'re registered ${account_firstname}. Please log in.`
@@ -86,6 +85,7 @@ async function registerAccount(req, res) {
       res.status(201).render("account/login", {
         title: "Login",
         nav,
+        flash: req.flash(),
         errors: null,
       })
     } else {
@@ -93,6 +93,7 @@ async function registerAccount(req, res) {
       res.status(501).render("account/register", {
         title: "Registration",
         nav,
+        flash: req.flash(),
         errors: null,
       })
     }
@@ -112,6 +113,7 @@ async function buildRegister(req, res, next) {
   res.render("account/register", {
     title: "Register",
     nav,
+    flash: req.flash(),
     errors: null,
   })
 }
