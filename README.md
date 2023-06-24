@@ -1,3 +1,16 @@
+## MVC
+
+m=model
+v=view
+c=controller
+r=route
+r knows about c
+c know m/v
+v know nothing
+m is database for rest of code knows nothing about code
+
+
+
 ## Getting Started
 
 This document is intended to get you started quickly in building a backend driven Node.js application complete with pages and content, backend logic and a PostgreSQL database for data storage.
@@ -26,7 +39,7 @@ With the packages installed you're ready to run the initial test.
 1. If the VSC terminal is still open use it. If it is closed, open it again using the same command as before.
 2. Type the following command, then press Enter:
 
-    
+
 
 3. If the command works, you should see the message "app listening on localhost:5500" in the console.
 4. Open the package.json file.

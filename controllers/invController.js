@@ -58,38 +58,40 @@ invCont.buildClassification = async function (req, res, next) {
 invCont.addClassification = async function (req, res, next) {
   const classificationName = req.body.classification_name
   try {
-  const data = await invModel.insertClassification(classificationName)
-  if (data) {
-    let nav = await utilities.getNav()
+    const data = await invModel.insertClassification(classificationName)
+    if (data) {
+      let nav = await utilities.getNav()
 
-    req.flash(
-      "notice",
-      `Congratulations, you did it!`
+
+      req.flash(
+        "notice",
+        `Congratulations, you did it! Look in the Nav bar.`
       )
       res.status(201).render("inventory/management", {
-    title: 'Management',
-    nav,
-    errors: null,
-    });
-
-  } else {
-    req.flash("notice", "Sorry, you did not .")
-    res.status(501).render("account/register", {
-      title: "Registration",
+        title: 'Management',
+        nav,
+        flash: req.flash(),
+        errors: null,
+      });
+    } else {
+      req.flash("notice", "Sorry, you did not make a new classification.")
+      res.status(501).render("account/register", {
+        title: "Registration",
+        nav,
+        flash: req.flash(),
+        errors: null,
+      })
+    }
+  } catch (error) {
+    console.error("addClassification error: ", error);
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("inventory/add-classification", {
+      title: "Add Classification - Error",
       nav,
+      flash: req.flash(),
       errors: null,
-    })
+    });
   }
-} catch (error) {
-  console.error("addClassification error: ", error);
-  req.flash("notice", 'Sorry, there was an error processing the registration.')
-  res.status(500).render("inventory/add-classification", {
-    title: "Add Classification - Error",
-    nav,
-    errors: null,
-  });
-}
-
 };
 
 

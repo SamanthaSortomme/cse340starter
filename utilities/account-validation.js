@@ -93,6 +93,7 @@ logValidate.checkLoginData = async (req, res, next) => {
       errors,
       title: "Login",
       nav,
+      flash: req.flash(),
       account_email,
     });
     return;

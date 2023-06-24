@@ -17,6 +17,15 @@
  </ul>
 <% } %>
 
+<% if (flash) { %>
+  <% if (flash.notice) { %>
+    <ul class="notice">
+      <% flash.notice.forEach(msg => { %>
+        <li><%= msg %></li>
+      <%  }) %>
+    </ul>
+  <% } %>
+<% } %>
 
 <a href="/inv/add-classification">Add New Classification</a>
 

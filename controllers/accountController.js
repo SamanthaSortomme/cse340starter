@@ -103,6 +103,7 @@ async function registerAccount(req, res) {
     res.status(500).render("account/register", {
       title: "Registration",
       nav,
+      flash: req.flash(),
       errors: null,
     })
   }
