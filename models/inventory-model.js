@@ -50,4 +50,4 @@ async function insertClassification(classification_name) {
   }
 }
 
-module.exports = {getClassifications, insertClassification,getInventoryByClassificationId, getInventoryByCarId}
+module.exports = {getClassifications, insertClassification, getInventoryByClassificationId, getInventoryByCarId}
