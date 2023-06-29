@@ -15,7 +15,6 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash());
-app.use(errorRoute);
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -32,14 +31,15 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
-app.use('/account', require('./routes/accountRoute'));
-app.get('/favicon.ico', (req, res) => res.status(204));
 app.set("view engine", "ejs")
+app.get('/favicon.ico', (req, res) => res.status(204));
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 app.use(require("./routes/static"))
 app.get("/", utilities.handleErrors(baseController.buildHome));
+app.use('/account', require('./routes/accountRoute'));
 app.use("/inv", require("./routes/inventoryRoute"))
+app.use("/error", utilities.handleErrors(require("./routes/errorRoute")))
 
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
