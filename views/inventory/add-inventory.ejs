@@ -30,13 +30,7 @@
 
 
 
-  <div>
-    <label for="classificationName">Classification Name:</label>
-    <input type="text" id="classificationName" name="classification_name" required>
-</div>
-
-
-  <form action="/inv/add-inventory" method="POST">
+  <form action="/inv/add-inventory" method="POST" onsubmit="return validateForm()">
     <div>
       <label for="price">Price:</label>
       <input type="number" id="price" name="inv_price" required value="<%= locals.inv_price %>">
@@ -50,10 +44,15 @@
 
     <div>
       <label for="classification">Classification:</label>
-      <select id="classification" name="classification_id" required value="<%= locals.classification_id %>">
-        <option value="1">Classification 1 Need to populate from databse Nav? </option>
+      <select id="classification" name="classification_id" required>
+        <% for(var i=0; i<classification.rowCount; i++) {%>
+          <option value="<%= classification.rows[i].classification_id %>">
+            <%= classification.rows[i].classification_name %>
+          </option>
+        <% } %>
       </select>
     </div>
+
 
 
 

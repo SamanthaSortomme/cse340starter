@@ -13,13 +13,7 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:carId", invController.buildByCarId);
 
 
-// router.get('/', inventoryController.showManagementView);
-// router.get('/add-classification', inventoryController.showAddClassificationView);
-// router.get('/add-inventory', inventoryController.showAddInventoryView);
-
 router.get("/add-classification", invController.buildClassification);
-
-// router.post("/add-classification", invController.addClassification);
 router.post(
     "/add-classification",
     validate.classValidate.rules(),
@@ -27,7 +21,13 @@ router.post(
     utilities.handleErrors(invController.addClassification)
 );
 
-
+router.get("/add-inventory", invController.buildInventory);
+router.post(
+    "/add-inventory",
+    validate.invValidate.rules(),
+    validate.invValidate.checkData,
+    utilities.handleErrors(invController.addInventory)
+);
 module.exports = router;
 
 

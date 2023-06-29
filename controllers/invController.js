@@ -61,8 +61,6 @@ invCont.addClassification = async function (req, res, next) {
     const data = await invModel.insertClassification(classificationName)
     if (data) {
       let nav = await utilities.getNav()
-
-
       req.flash(
         "notice",
         `Congratulations, you did it! Look in the Nav bar.`
@@ -94,6 +92,83 @@ invCont.addClassification = async function (req, res, next) {
   }
 };
 
+invCont.buildInventory = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let classification = await invModel.getClassifications();
+  let inventoryList = await utilities.getInv();
+  res.render('inventory/add-inventory', {
+    title: 'Add Inventory',
+    nav,
+    classification,
+    inventoryList,
+    flash: req.flash(),
+    errors: null,
+  });
+  console.log(classification)
+}
+// invCont.buildInventory = async function (req, res, next) {
+//   let nav;
+//   try {
+//     nav = await utilities.getNav();
+//     const classifications = await invModel.getClassifications();
+//     const inventoryList = await Util.getInv();
+//     res.render('inventory/add-inventory', {
+//       title: 'Add Inventory',
+//       nav,
+//       classifications: classifications,
+//       inventoryList: inventoryList,
+//       flash: req.flash(),
+//       errors: null,
+//     });
+//   } catch (error) {
+//     console.error("buildInventory error:", error);
+//     req.flash("notice", 'Sorry, there was an error processing the request.')
+//     res.status(500).render("inventory/add-inventory", {
+//       title: "Add Inventory - Error",
+//       nav,
+//       flash: req.flash(),
+//       errors: null,
+//     });
+//   }
+// }
 
+
+
+invCont.addInventory = async function (req, res, next) {
+  const inventoryName = req.body.inventory_name
+  try {
+    const data = await invModel.insertInventory(inventoryName)
+    if (data) {
+      let nav = await utilities.getNav()
+      req.flash(
+        "notice",
+        `Congratulations, you did it!`
+      )
+      res.status(201).render("inventory/management", {
+        title: 'Management',
+        nav,
+        flash: req.flash(),
+        errors: null,
+      });
+    } else {
+      req.flash("notice", "Sorry, you did not make a new inventory.")
+      res.status(501).render("inventory/add-inventory", {
+        title: "Inventory",
+        nav,
+        flash: req.flash(),
+        errors: null,
+      })
+    }
+  } catch (error) {
+    console.error("addInventory error: ", error);
+    req.flash("notice", 'Sorry, there was an error processing the inventory.')
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add Inventory - Error",
+      nav,
+      flash: req.flash(),
+      errors: null,
+    });
+  }
+};
 
 module.exports = invCont
