@@ -1,5 +1,6 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
+const invModel = require("../models/inventory-model")
 
 const classValidate = {}
 const invValidate = {}
@@ -81,6 +82,8 @@ invValidate.rules = () => {
 
 invValidate.checkData = async (req, res, next) => {
     const { inv_price, inv_miles, classification_id, inv_description, inv_image, inv_thumbnail, inv_color, inv_make, inv_model, inv_year } = req.body;
+    let classification = await invModel.getClassifications();
+    let inventoryList = await utilities.getInv();
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
@@ -88,6 +91,8 @@ invValidate.checkData = async (req, res, next) => {
             errors,
             title: "Add Inventory",
             nav,
+            classification,
+            inventoryList,
             flash: req.flash(),
             inv_price,
             inv_miles,
@@ -104,10 +109,6 @@ invValidate.checkData = async (req, res, next) => {
     }
     next();
 };
-
-
-
-
 
 
 module.exports = {

@@ -26,6 +26,8 @@ nav {
   color: white;
   padding: .2em;
   margin-top: 20px;
+  height: auto;
+  max-height: 100%;
 }
 
 nav li {
@@ -194,6 +196,10 @@ a.create-account {
   text-align: center;
 }
 
+p {
+  overflow-y: auto;
+  max-height: 200px;
+}
 
 
 

@@ -21,7 +21,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 invCont.buildByCarId = async function (req, res, next) {
   const carId = req.params.carId
   const data = await invModel.getInventoryByCarId(carId)
-  console.log(data)
+  // console.log(data)
   const buildCar = await utilities.buildCar(data)
   let nav = await utilities.getNav()
   const makeMod = data.inv_make + data.inv_model
@@ -104,7 +104,7 @@ invCont.buildInventory = async function (req, res, next) {
     flash: req.flash(),
     errors: null,
   });
-  console.log(classification)
+  // console.log(classification)
 }
 // invCont.buildInventory = async function (req, res, next) {
 //   let nav;
@@ -137,7 +137,7 @@ invCont.buildInventory = async function (req, res, next) {
 invCont.addInventory = async function (req, res, next) {
   const inventoryName = req.body.inventory_name
   try {
-    const data = await invModel.insertInventory(inventoryName)
+    const data = await invModel.addInventory(inventoryName)
     if (data) {
       let nav = await utilities.getNav()
       req.flash(
@@ -155,6 +155,8 @@ invCont.addInventory = async function (req, res, next) {
       res.status(501).render("inventory/add-inventory", {
         title: "Inventory",
         nav,
+        classification,
+        inventoryList,
         flash: req.flash(),
         errors: null,
       })
@@ -165,6 +167,8 @@ invCont.addInventory = async function (req, res, next) {
     res.status(500).render("inventory/add-inventory", {
       title: "Add Inventory - Error",
       nav,
+      classification,
+      inventoryList,
       flash: req.flash(),
       errors: null,
     });
