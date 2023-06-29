@@ -80,11 +80,11 @@ Util.buildClassificationGrid = async function(data){
 }
 
 Util.buildCar = async function(vehicle){
-  let grid = '<div id="info-wrapper" class="info-wrapper">'
+  let grid = '<div id="carGrid" class="carGrid">'
   if(vehicle){
     grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id
     + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
-    + 'details"><img src="' + vehicle.inv_thumbnail
+    + 'details"  class="carImage"><img src="' + vehicle.inv_thumbnail
     +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
     +' on CSE Motors"></a>'
     grid += '<p>' + vehicle.inv_description + '</p>'
