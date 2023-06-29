@@ -46,7 +46,7 @@
   </div>
   <div>
     <label for="description">Description:</label>
-    <textarea id="description" name="inv_description" required value="<%= locals.inv_description %>"></textarea>
+    <textarea id="description" name="inv_description" required><%= locals.inv_description %></textarea>
   </div>
   <div>
     <label for="image">Image:</label>
@@ -73,7 +73,9 @@
     <label for="classification">Classification:</label>
     <select id="classification" name="classification_id" required>
       <% for(var i=0; i<classification.rowCount; i++) {%>
-        <option value="<%= classification.rows[i].classification_id %>">
+        <% var selected = ( classification_id == classification.rows[i].classification_id ) ? "selected" : ""; %>
+
+        <option value="<%= classification.rows[i].classification_id %>" <%= selected %> >
           <%= classification.rows[i].classification_name %>
         </option>
       <% } %>

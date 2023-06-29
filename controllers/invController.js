@@ -135,11 +135,14 @@ invCont.buildInventory = async function (req, res, next) {
 
 
 invCont.addInventory = async function (req, res, next) {
-  const inventoryName = req.body.inventory_name
+  // const inventoryName = req.body.inventory_name
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  let nav = await utilities.getNav()
+  let classification = await invModel.getClassifications();
+  let inventoryList = await utilities.getInv();
   try {
-    const data = await invModel.addInventory(inventoryName)
+    const data = await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
     if (data) {
-      let nav = await utilities.getNav()
       req.flash(
         "notice",
         `Congratulations, you did it!`
@@ -157,6 +160,7 @@ invCont.addInventory = async function (req, res, next) {
         nav,
         classification,
         inventoryList,
+        inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
         flash: req.flash(),
         errors: null,
       })
@@ -169,6 +173,7 @@ invCont.addInventory = async function (req, res, next) {
       nav,
       classification,
       inventoryList,
+      inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
       flash: req.flash(),
       errors: null,
     });

@@ -53,7 +53,7 @@ Util.getInv = async function (req, res, next) {
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
-    grid = '<ul id="inv-display">'
+    grid = '<ul id="inv-display" class="inv-display">'
     data.forEach(vehicle => {
       grid += '<li>'
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id
@@ -71,7 +71,6 @@ Util.buildClassificationGrid = async function(data){
       + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
       grid += '</div>'
       grid += '</li>'
-
     })
     grid += '</ul>'
   } else {
@@ -81,7 +80,7 @@ Util.buildClassificationGrid = async function(data){
 }
 
 Util.buildCar = async function(vehicle){
-  let grid = ''
+  let grid = '<div id="info-wrapper" class="info-wrapper">'
   if(vehicle){
     grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id
     + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
@@ -92,9 +91,10 @@ Util.buildCar = async function(vehicle){
     grid += '<div class="namePrice">'
     grid += '<p>' + 'Year: ' + vehicle.inv_year + '</p>'
     grid += '<p>' +'Color: ' + vehicle.inv_color + '</p>'
-    grid += '<p>' +'miles: ' + vehicle.inv_miles + '</p>'
-    grid += '<span>$'
-    + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+    grid += '<p>' +'miles: '
+    + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
+    grid += '<p>' +'Cost: ' +'$'
+    + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</p>'
     grid += '</div>'
   } else {
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'

@@ -25,9 +25,6 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-
-
-
 async function getInventoryByCarId(carId) {
   try {
     const data = await pool.query(
@@ -54,12 +51,8 @@ async function insertClassification(classification_name) {
 }
 // 6/27 inv
 async function addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){
-  try {
-    const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *";
-    return await pool.query(sql, [inv_price, inv_miles, classification_id, inv_description, inv_image, inv_thumbnail, inv_color, inv_make, inv_model, inv_year]);
-  } catch (error) {
-    return error.message;
-  }
+  const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *";
+  return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id]);
 }
 
 async function getInventory() {
