@@ -9,8 +9,12 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
-router.get('/register', accountController.buildRegister);
-router.get('/', accountController.getAccount);
+router.get('/register', utilities.handleErrors(accountController.buildRegister));
+
+
+router.get('/', utilities.checkLogin, utilities.handleErrors(accountController.buildAccManagement));
+// router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement)) This is the c/p from assignment
+
 
 router.post(
     "/register",
@@ -23,11 +27,16 @@ router.post(
     "/login",
     regValidate.logValidate.loginRules(),
     regValidate.logValidate.checkLoginData,
-    utilities.handleErrors(accountController.processLogin)
+    utilities.handleErrors(accountController.accountLogin)
   );
-// router.post("/login", (req, res) => {
-//   res.status(200).send("Login route");
-// });
+
+  // code given in week 5 check for names
+  // router.post(
+  //   "/login",
+  //   regValidate.loginRules(),
+  //   regValidate.checkLoginData,
+  //   utilities.handleErrors(accountController.accountLogin)
+  // )
 
 
   //process login not a function at this time========================================

@@ -1,9 +1,11 @@
 
+const cookieParser = require("cookie-parser")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const baseController = require("./controllers/baseController")
 const app = express()
+
 const utilities = require('./utilities');
 const errorRoute = require('./routes/errorRoute');
 const session = require("express-session")
@@ -11,6 +13,10 @@ const pool = require('./database/')
 // const accountRoute = require('./routes/accountRoute');
 const flash = require('connect-flash');
 const bodyParser = require("body-parser")
+
+
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
