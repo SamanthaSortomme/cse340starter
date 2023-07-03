@@ -205,14 +205,12 @@ invCont.getInventoryJSON = async (req, res, next) => {
 edit inventory
  * ************************** */
 invCont.editInventory = async function (req, res, next) {
-
   const inv_id = parseInt(req.params.inv_id); // Collect and store the inventory_id as an integer
-
+// console.log(inv_id)
   let nav = await utilities.getNav();
   const itemData = await invModel.getInventoryByCarId(inv_id)
   const classification = await invModel.getClassifications();
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
-
 
   res.status(201).render("inventory/edit-inventory", {
     title: "Edit " + itemName,
@@ -238,49 +236,31 @@ invCont.editInventory = async function (req, res, next) {
 
 
 invCont.updateInventory = async function (req, res, next) {
-  // const inventoryName = req.body.inventory_name
-  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
   let nav = await utilities.getNav()
   let classification = await invModel.getClassifications();
-  try {
-    const data = await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
-    if (data) {
-      req.flash(
-        "notice",
-        `Congratulations, you did it!`
-      )
-      res.status(201).render("inventory/management", {
-        title: 'Management',
-        nav,
-        classification,
-        flash: req.flash(),
-        errors: null,
-      });
-    } else {
-      req.flash("notice", "Sorry, you did not make a new inventory.")
-      res.status(501).render("inventory/add-inventory", {
-        title: "Inventory",
-        nav,
-        classification,
-        inventoryList,
-        inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
-        flash: req.flash(),
-        errors: null,
-      })
+    const updateResult = await invModel.updateInventory(
+       inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,inv_id)
+
+    if (updateResult){
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model
+      req.flash("notice", `The ${itemName} was successfully updated.`)
+      res.redirect("/inv/")
     }
-  } catch (error) {
-    console.error("addInventory error: ", error);
-    req.flash("notice", 'Sorry, there was an error processing the inventory.')
-    res.status(500).render("inventory/add-inventory", {
-      title: "Add Inventory - Error",
+    else {
+      const classificationSelect = await utilities.buildClassificationList(classification_id)
+      const itemName = `${inv_make} ${inv_model}`
+      req.flash("notice", "Sorry, the insert failed.")
+      res.status(501).render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
       nav,
       classification,
       inventoryList,
-      inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
+      inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
       flash: req.flash(),
       errors: null,
-    });
-  }
+      })
+    }
 };
 
 

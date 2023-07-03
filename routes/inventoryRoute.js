@@ -33,6 +33,15 @@ router.post(
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 
+router.get("/edit-inventory/:inv_id", utilities.handleErrors(invController.editInventory))
+
+
+router.post("/edit-inventory/",
+validate.invValidate.rules(),
+validate.invValidate.checkUpdateData,
+utilities.handleErrors(invController.updateInventory))
+
+
 
 
 module.exports = router;

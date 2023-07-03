@@ -18,6 +18,8 @@ classValidate.rules = () => {
 classValidate.checkData = async (req, res, next) => {
     const { classification_name } = req.body;
     let errors = []
+    let classification = await invModel.getClassifications();
+    let inventoryList = await utilities.getInv();
     errors = validationResult(req);
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav();
@@ -27,6 +29,8 @@ classValidate.checkData = async (req, res, next) => {
         nav,
         flash: req.flash(),
         classification_name,
+        classification,
+        inventoryList,
       });
       return;
     }
@@ -108,6 +112,38 @@ invValidate.checkData = async (req, res, next) => {
         return;
     }
     next();
+};
+
+
+invValidate.checkUpdateData = async (req, res, next) => {
+  const { inv_price, inv_miles, classification_id, inv_description, inv_image, inv_thumbnail, inv_color, inv_make, inv_model, inv_year, inv_id } = req.body;
+  let classification = await invModel.getClassifications();
+  let inventoryList = await utilities.getInv();
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      let nav = await utilities.getNav();
+      res.render("inventory/edit-inventory", {
+          errors,
+          title: "Edit Inventory",
+          nav,
+          classification,
+          inventoryList,
+          flash: req.flash(),
+          inv_price,
+          inv_miles,
+          classification_id,
+          inv_description,
+          inv_image,
+          inv_thumbnail,
+          inv_color,
+          inv_make,
+          inv_model,
+          inv_year,
+          inv_id,
+      });
+      return;
+  }
+  next();
 };
 
 
