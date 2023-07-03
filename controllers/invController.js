@@ -108,34 +108,8 @@ invCont.buildInventory = async function (req, res, next) {
     flash: req.flash(),
     errors: null,
   });
-  // console.log(classification)
-}
-// invCont.buildInventory = async function (req, res, next) {
-//   let nav;
-//   try {
-//     nav = await utilities.getNav();
-//     const classifications = await invModel.getClassifications();
-//     const inventoryList = await Util.getInv();
-//     res.render('inventory/add-inventory', {
-//       title: 'Add Inventory',
-//       nav,
-//       classifications: classifications,
-//       inventoryList: inventoryList,
-//       flash: req.flash(),
-//       errors: null,
-//     });
-//   } catch (error) {
-//     console.error("buildInventory error:", error);
-//     req.flash("notice", 'Sorry, there was an error processing the request.')
-//     res.status(500).render("inventory/add-inventory", {
-//       title: "Add Inventory - Error",
-//       nav,
-//       flash: req.flash(),
-//       errors: null,
-//     });
-//   }
-// }
 
+}
 
 
 invCont.addInventory = async function (req, res, next) {
@@ -205,7 +179,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 edit inventory
  * ************************** */
 invCont.editInventory = async function (req, res, next) {
-  const inv_id = parseInt(req.params.inv_id); // Collect and store the inventory_id as an integer
+  const inv_id = parseInt(req.params.inv_id);
 // console.log(inv_id)
   let nav = await utilities.getNav();
   const itemData = await invModel.getInventoryByCarId(inv_id)
@@ -230,7 +204,6 @@ invCont.editInventory = async function (req, res, next) {
     inv_color: itemData.inv_color,
     classification_id: itemData.classification_id
   });
-
 };
 
 
@@ -262,6 +235,79 @@ invCont.updateInventory = async function (req, res, next) {
       })
     }
 };
+
+
+
+
+
+
+
+
+/* ***************************
+delete inventory
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id);
+// console.log(inv_id)
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryByCarId(inv_id)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+  res.status(201).render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    flash: req.flash(),
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+  });
+};
+
+
+invCont.removeInventory = async function (req, res, next) {
+  const inv_id = parseInt(req.body.inv_id);
+  let nav = await utilities.getNav()
+    const removeResult = await invModel.removeInventory(inv_id)
+
+    if (removeResult){
+      req.flash("notice", `The car was successfully Deleted.`)
+      res.redirect("/inv/")
+    }
+    else {
+      req.flash("notice", "Sorry, the delete failed.")
+      res.status(501).render("/inv/")
+    }
+};
+
+
+
+
+
+// invCont.removeInventory = async function (req, res, next) {
+//   const inv_id = parseInt(req.body.inv_id);
+//   console.log(req.body)
+// console.log(inv_id)
+// console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
+//   let nav = await utilities.getNav();
+//   const itemData = await invModel.getInventoryByCarId(inv_id)
+//   const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+//   res.status(201).render("inventory/delete-confirm", {
+//     title: "Delete " + itemName,
+//     nav,
+//     flash: req.flash(),
+//     errors: null,
+//     inv_id: itemData.inv_id,
+//     inv_make: itemData.inv_make,
+//     inv_model: itemData.inv_model,
+//     inv_year: itemData.inv_year,
+//     inv_price: itemData.inv_price,
+//   });
+// };
+
 
 
 
