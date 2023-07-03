@@ -59,6 +59,7 @@ invCont.buildClassification = async function (req, res, next) {
 
 invCont.addClassification = async function (req, res, next) {
   const classificationName = req.body.classification_name
+  let classification = await invModel.getClassifications();
   try {
     const data = await invModel.insertClassification(classificationName)
     if (data) {
@@ -70,6 +71,7 @@ invCont.addClassification = async function (req, res, next) {
       res.status(201).render("inventory/management", {
         title: 'Management',
         nav,
+        classification,
         flash: req.flash(),
         errors: null,
       });
@@ -141,7 +143,6 @@ invCont.addInventory = async function (req, res, next) {
   const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
   let nav = await utilities.getNav()
   let classification = await invModel.getClassifications();
-  let inventoryList = await utilities.getInv();
   try {
     const data = await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
     if (data) {
@@ -152,6 +153,7 @@ invCont.addInventory = async function (req, res, next) {
       res.status(201).render("inventory/management", {
         title: 'Management',
         nav,
+        classification,
         flash: req.flash(),
         errors: null,
       });
@@ -198,5 +200,89 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(new Error("No data returned"))
   }
 }
+
+/* ***************************
+edit inventory
+ * ************************** */
+invCont.editInventory = async function (req, res, next) {
+
+  const inv_id = parseInt(req.params.inv_id); // Collect and store the inventory_id as an integer
+
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryByCarId(inv_id)
+  const classification = await invModel.getClassifications();
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+
+  res.status(201).render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    flash: req.flash(),
+    classification,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id
+  });
+
+};
+
+
+
+invCont.updateInventory = async function (req, res, next) {
+  // const inventoryName = req.body.inventory_name
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  let nav = await utilities.getNav()
+  let classification = await invModel.getClassifications();
+  try {
+    const data = await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
+    if (data) {
+      req.flash(
+        "notice",
+        `Congratulations, you did it!`
+      )
+      res.status(201).render("inventory/management", {
+        title: 'Management',
+        nav,
+        classification,
+        flash: req.flash(),
+        errors: null,
+      });
+    } else {
+      req.flash("notice", "Sorry, you did not make a new inventory.")
+      res.status(501).render("inventory/add-inventory", {
+        title: "Inventory",
+        nav,
+        classification,
+        inventoryList,
+        inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
+        flash: req.flash(),
+        errors: null,
+      })
+    }
+  } catch (error) {
+    console.error("addInventory error: ", error);
+    req.flash("notice", 'Sorry, there was an error processing the inventory.')
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add Inventory - Error",
+      nav,
+      classification,
+      inventoryList,
+      inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
+      flash: req.flash(),
+      errors: null,
+    });
+  }
+};
+
+
 
 module.exports = invCont
