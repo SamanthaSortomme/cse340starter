@@ -10,7 +10,6 @@ const utilities = require('./utilities');
 const errorRoute = require('./routes/errorRoute');
 const session = require("express-session")
 const pool = require('./database/')
-// const accountRoute = require('./routes/accountRoute');
 const flash = require('connect-flash');
 const bodyParser = require("body-parser")
 

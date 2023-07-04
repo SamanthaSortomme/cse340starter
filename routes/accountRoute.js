@@ -30,13 +30,7 @@ router.post(
     utilities.handleErrors(accountController.accountLogin)
   );
 
-  // code given in week 5 check for names
-  // router.post(
-  //   "/login",
-  //   regValidate.loginRules(),
-  //   regValidate.checkLoginData,
-  //   utilities.handleErrors(accountController.accountLogin)
-  // )
+router.get('/logout', utilities.handleErrors(accountController.accountLogout));
 
 
   //process login not a function at this time========================================
