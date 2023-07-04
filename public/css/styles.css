@@ -201,6 +201,27 @@ p {
   max-height: 200px;
 }
 
+#tools {
+  display: flex;
+  gap: 25px;
+}
+
+.welcome-link,
+.logout-link,
+.account-link {
+  text-decoration: none;
+  font-size: 18px;
+  transition: transform 0.3s ease-in-out;
+  color: black;
+}
+
+.welcome-link:hover,
+.logout-link:hover,
+.account-link:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
+  color: blue;
+}
 
 
 /* .flash-message.success {

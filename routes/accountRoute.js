@@ -32,6 +32,27 @@ router.post(
 
 router.get('/logout', utilities.handleErrors(accountController.accountLogout));
 
+router.get(
+  "/update/:account_id",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountUpdate)
+);
+
+router.post(
+  "/account-update",
+  utilities.checkLogin,
+  regValidate.validate.updateAccountRules(),
+  regValidate.validate.checkUpdatedData,
+  utilities.handleErrors(accountController.accountUpdate)
+);
+
+router.post(
+  "/change-password",
+  utilities.checkLogin,
+    // regValidate.validate.changePasswordRules,
+  utilities.handleErrors(accountController.changePassword)
+);
+
 
   //process login not a function at this time========================================
 module.exports = router;

@@ -62,10 +62,62 @@ async function getAccountByEmail (account_email) {
   }
 }
 
+async function getAccountById (account_id) {
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_id = $1',
+      [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching id found")
+  }
+}
+
+async function updateAccount(account_firstname, account_lastname, account_email, account_id){
+  try {
+    const sql =
+    'UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *'
+      // "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+    const data = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id,
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("Unable to process account updates.")
+  }
+}
+
+async function changePassword(account_password, account_id){
+
+  try {
+    const sql =
+    'UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *'
+      // "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+      console.log(account_password)
+
+    const data = await pool.query(sql, [
+      account_password,
+      account_id,
+    ])
+    console.log(data.rows[0])
+
+    return data.rows[1]
+  } catch (error) {
+    console.error("Unable to change account password.")
+  }
+}
+
+
 
   module.exports = {
     registerAccount,
     checkExistingEmail,
     loginAccount,
     getAccountByEmail,
+    getAccountById,
+    updateAccount,
+    changePassword,
   };
