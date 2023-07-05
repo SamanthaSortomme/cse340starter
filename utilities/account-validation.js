@@ -48,6 +48,7 @@ validate.registrationRules = () => {
  *  Update Account Data Validation Rules
  * ********************************* */
   validate.updateAccountRules = () => {
+    const id =  parseInt(body("account_id"))
     return [
       body("account_firstname")
         .trim()
@@ -61,7 +62,13 @@ validate.registrationRules = () => {
       .trim()
       .isEmail()
       .normalizeEmail()
-      .withMessage("A valid email is required."),
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmailUpdate(account_email, id)
+        if (emailExists){
+          throw new Error("Email exists. Please log in or use different email")
+        }
+      }),
     ]
   }
 
