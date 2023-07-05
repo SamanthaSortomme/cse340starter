@@ -116,7 +116,7 @@ async function changePassword(account_password, account_id){
     ])
     console.log(data.rows[0])
 
-    return data.rows[1]
+    return data.rows[0]
   } catch (error) {
     console.error("Unable to change account password.")
   }

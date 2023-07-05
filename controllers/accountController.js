@@ -150,7 +150,14 @@ async function buildAccountUpdate(req, res, next) {
   );
   if (updateResult){
     const updatedName = updateResult.account_firstname + " " + updateResult.account_lastname
-    req.flash(`${updatedName}'s account was successfully updated.`)
+
+    const accountData = await Account.getAccountById(account_id)
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+
+    req.flash("notice",`${updatedName}'s account was successfully updated.`)
+    // req.flash("notice", 'Sorry, there was an error processing the inventory.')
+
     res.redirect("/account")
   }
   else {
@@ -158,7 +165,6 @@ async function buildAccountUpdate(req, res, next) {
     res.status(501).render("account/update/", {
       title: "Edit Account",
       nav,
-      flash: req.flash(),
       errors: null,
       account_firstname,
       account_lastname,
@@ -180,7 +186,6 @@ async function changePassword(req, res) {
     res.status(500).render("account/update", {
       title: "Edit Account",
       nav,
-      flash: req.flash(),
       errors: null,
       account_id,
     });
@@ -188,16 +193,19 @@ async function changePassword(req, res) {
   const updateResult = await Account.changePassword(hashedPassword, account_id)
   if (updateResult){
     const updatedName = updateResult.account_firstname + " " + updateResult.account_lastname
-    req.flash(`${updatedName}'s password was successfully updated.`)
+    req.flash("notice",`${updatedName}'s password was successfully updated.`)
     res.redirect("/account")
+
   }
   else {
     req.flash("notice", "Sorry, the password update failed.");
     res.status(501).render("account/update", {
       title: "Edit Account",
       nav,
-      errors: null,
+
       flash: req.flash(),
+
+      errors: null,
       account_id,
     });
   }
@@ -213,9 +221,7 @@ async function register(req, res, next) {
  * ************************************ */
 async function accountLogout(req, res) {
   let nav = await utilities.getNav()
-
    req.flash("notice", "you're logged out.")
-
    res.clearCookie("jwt");
    return res.redirect("/")
 }
