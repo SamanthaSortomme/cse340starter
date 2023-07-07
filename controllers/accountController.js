@@ -232,21 +232,15 @@ async function accountLogout(req, res) {
 
 
 /* ***************************
-delete inventory
+delete account
  * ************************** */
-// invCont.deleteInventory = async function (req, res, next) {
 async function deleteAccount(req, res, next) {
-  // const inv_id = parseInt(req.params.inv_id);
   const account_id = parseInt(req.params.account_id);
   console.log(account_id)
   let nav = await utilities.getNav();
   const accountData = await Account.getAccountById(account_id)
   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
   res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-    // const itemData = await invModel.getInventoryByCarId(inv_id)
-    // const data = await Account.getAccountById(account_id);
-
-    // const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
   const itemName = `${accountData.account_firstname} ${accountData.account_lastname}`;
   res.status(201).render("account/delete-confirm", {
       title: "Delete " + itemName,
@@ -264,14 +258,10 @@ async function deleteAccount(req, res, next) {
 
 
 async function removeAccount(req, res, next) {
-  // const inv_id = parseInt(req.body.inv_id);
   const account_id = parseInt(req.body.account_id);
 
   let nav = await utilities.getNav()
-
-    // const removeResult = await invModel.removeInventory(inv_id)
     const removeResult = await Account.removeAccount(account_id)
-
     if (removeResult){
       req.flash("notice", `The account was successfully Deleted.`)
       res.redirect("/")
