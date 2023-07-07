@@ -54,6 +54,18 @@ router.post(
 );
 
 
+
+
+router.get("/delete-confirm/:account_id",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.deleteAccount)
+)
+
+router.post("/delete-confirm/",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.removeAccount)
+)
+
   //process login not a function at this time========================================
 module.exports = router;
 
